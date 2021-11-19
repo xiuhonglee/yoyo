@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import { Button as MuiButton } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
+// import theme from './theme';
+
 import './App.css';
 
 function App() {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <CssBaseline enableColorScheme />
+      <ThemeProvider theme={theme}>
+        <MuiButton variant="contained">Hello World</MuiButton>
+      </ThemeProvider>
+    </React.Fragment>
   );
 }
 
